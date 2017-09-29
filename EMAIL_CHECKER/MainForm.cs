@@ -72,7 +72,7 @@
 				oMailMessage.IsBodyHtml = true;
 				oMailMessage.Body = bodyTextBox.Text;
 				oMailMessage.BodyEncoding = System.Text.Encoding.UTF8;
-				//oMailMessage.BodyTransferEncoding = System.Net.Mime.TransferEncoding.Base64;
+				oMailMessage.BodyTransferEncoding = System.Net.Mime.TransferEncoding.Unknown; // Default: [Unknown]
 
 				oMailMessage.Priority = System.Net.Mail.MailPriority.Normal;
 				oMailMessage.DeliveryNotificationOptions =
@@ -90,6 +90,10 @@
 				oSmtpClient =
 					new System.Net.Mail.SmtpClient();
 
+				oSmtpClient.UseDefaultCredentials = false;
+				oSmtpClient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+				oSmtpClient.DeliveryFormat = System.Net.Mail.SmtpDeliveryFormat.SevenBit; // Default: [SevenBit]
+
 				oSmtpClient.EnableSsl = enableSslCheckBox.Checked;
 
 				oSmtpClient.Timeout =
@@ -102,8 +106,6 @@
 
 				oSmtpClient.Port =
 					System.Convert.ToInt32(portTextBox.Text);
-
-				oSmtpClient.UseDefaultCredentials = false;
 
 				System.Net.NetworkCredential oNetworkCredential =
 					new System.Net.NetworkCredential
